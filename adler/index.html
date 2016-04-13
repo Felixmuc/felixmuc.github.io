@@ -5,6 +5,8 @@
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 	<script src="etappe02.js"></script>
+	<script src="etappe03.js"></script>
+	<script src="etappe04.js"></script>
 	<link rel="stylesheet" href="adler.css" />
   </head>
   <body>
@@ -20,7 +22,22 @@
 	style:{color: "#ff0050", weight: 15}
 	});
 	adlerKarte.addLayer(etappe02);
+	
+	var etappe03 = L.geoJson(etappe03json, {
+	style:{color: "#ff1500", weight: 15}
+	});
+	adlerKarte.addLayer(etappe03);
+	
+	var etappe04 = L.geoJson(etappe04json, {
+	style:{color: "#0404B4", weight: 15}
+	});
+	adlerKarte.addLayer(etappe04);
+	
+	
 	adlerKarte.fitBounds(etappe02.getBounds());
+	
+	
+	
 	</script>
   </body>
 </html>
