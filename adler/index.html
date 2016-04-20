@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <meta charset="utf-8" />
     <title>Adlerweg</title>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
 	<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
@@ -19,6 +20,8 @@
 	</script>
 	<script>
 		window.onload = function () {
+			var adlerKarte = L.map("adlerkarteDiv");
+
 			var layers = { // http://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml
 				geolandbasemap : L.tileLayer("http://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", {
 					subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
@@ -41,6 +44,24 @@
 					attribution : 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
 				})
 			};
+			adlerKarte.addLayer(layers.geolandbasemap);
+			//adlerKarte.setView([47, 11], 10);
+			var etappe02 = L.geoJson(etappe02json, {
+			style:{color: "#ff0050", weight: 15}
+			});
+			
+			var etappe03 = L.geoJson(etappe03json, {
+			style:{color: "#ff1500", weight: 15}
+			});
+			
+			var etappe04 = L.geoJson(etappe04json, {
+			style:{color: "#0404B4", weight: 15}
+			});
+			
+			var etappenGruppe = L.featureGroup([etappe02,etappe03,etappe04]);
+			adlerKarte.addLayer(etappenGruppe);
+			adlerKarte.fitBounds(etappenGruppe.getBounds());
+			//L.control.layers({"OSM":layers},{"Tracks":etappenGruppe}).addTo(adlerKarte);
 
 			L.control.layers({
 				"Geoland Basemap" : layers.geolandbasemap,
@@ -48,44 +69,21 @@
 				"Geoland Basemap Grau": layers.bmapgrau,
 				"Geoland Basemap High DPI" : layers.bmaphidpi,
 				"Geoland Basemap Orthofoto" : layers.bmaporthofoto30cm
-			}).addTo(adlerKarte)
+			},
+			{ etappenGruppe }
+			).addTo(adlerKarte)
 
-		};
+
+			
+			etappe02.bindPopup("<b>Etappe 02</b>");
+			etappe03.bindPopup("<b>Etappe 03</b>");
+			etappe04.bindPopup("<b>Etappe 04</b>");
+		};	
 	</script>
   </head>
   <body>
     <h1>Adlerweg</h1>
 	<div id="adlerkarteDiv"></div>
-	<script>
-	var adlerKarte = L.map("adlerkarteDiv");
-	var osmLayer = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>'
-        }).addTo(adlerKarte);
-	adlerKarte.setView([47, 11], 10);
-	var etappe02 = L.geoJson(etappe02json, {
-	style:{color: "#ff0050", weight: 15}
-	});
-	adlerKarte.addLayer(etappe02);
-	
-	var etappe03 = L.geoJson(etappe03json, {
-	style:{color: "#ff1500", weight: 15}
-	});
-	adlerKarte.addLayer(etappe03);
-	
-	var etappe04 = L.geoJson(etappe04json, {
-	style:{color: "#0404B4", weight: 15}
-	});
-	adlerKarte.addLayer(etappe04);
-	
-	etappe02.bindPopup("<b>Etappe 02</b>");
-	etappe03.bindPopup("<b>Etappe 03</b>");
-	etappe04.bindPopup("<b>Etappe 04</b>");
-	
-	
-	adlerKarte.fitBounds(etappe02.getBounds());
-	
-	
-	
-	</script>
+
   </body>
 </html>
