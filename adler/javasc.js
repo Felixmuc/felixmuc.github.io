@@ -2,6 +2,45 @@
  zeigt drei etappen des adlerwegs auf einer leflet karte mit photos von panoramio
  verteilt auf mehrere zeilen
 */
+//var hallo ="sepp"
+//alert(hallo)
+/*var liste=[1,2,3,4,5]
+alert(liste.length) -> die anzahl der elemente wird angezeigt
+alert(liste[0]) -> erste element wird angesprochen mit 0, eckige Klammer immer bei listen
+
+
+var termin={
+	"ort": "Innsbruck",
+	"zeit": "18 uhr"
+	"teilnehmer": ['maria','sepp','franz']
+			}
+alert(termin.ort) -> ort wird angesprochen		
+alert(termin.teilnehmer[0]) -> maria wird angesprochen
+
+for (i=0; i<termin.teilnehmer.length; i+=1){ -> vorschleife, i ist variable für liste, teilnehmerliste wurd durchgegangen (anfang, bis wohin, was passiert nach jeder schleife)
+	alert(termin.teilnehmer[i])
+											}
+	
+for (key in termin) 	{
+	if (key=="tag")	{				->!= verneinung
+	alert(key +"-" + termin[key]);
+					}
+	else	{
+		alert('kein tag', sondern '+key)
+	}
+						}
+)	
+
+function saghallo() {
+		alert("hallo")
+}
+sageHallo();
+function sagWas(message) {
+		alert("message")
+}
+sagWas(ich_kenn_mich_nicht_aus);
+*/
+
 window.onload = function() {
             var adlerKarte = L.map("adlerkarteDiv");
 
