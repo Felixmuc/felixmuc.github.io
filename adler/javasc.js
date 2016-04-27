@@ -1,3 +1,7 @@
+/*adlerweg script
+ zeigt drei etappen des adlerwegs auf einer leflet karte mit photos von panoramio
+ verteilt auf mehrere zeilen
+*/
 window.onload = function() {
             var adlerKarte = L.map("adlerkarteDiv");
 
