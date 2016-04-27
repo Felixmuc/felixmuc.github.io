@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8" />
-    <title>Adlerweg</title>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-    <script src="etappe02.js"></script>
-    <script src="etappe03.js"></script>
-    <script src="etappe04.js"></script>
-    <link rel="stylesheet" href="adler.css" />
-  
-    <script>
-        window.onload = function() {
+window.onload = function() {
             var adlerKarte = L.map("adlerkarteDiv");
 
             var layers = { // http://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml
@@ -107,13 +93,3 @@
                 }
             }
         };
-    </script>
-</head>
-
-<body>
-    <h1>Adlerweg</h1>
-    <div id="adlerkarteDiv"></div>
-
-</body>
-
-</html>
