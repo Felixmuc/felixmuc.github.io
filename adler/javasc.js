@@ -43,6 +43,7 @@ sagWas(ich_kenn_mich_nicht_aus);
 
 window.onload = function() {
             var adlerKarte = L.map("adlerkarteDiv");
+			var hash = new L.Hash(adlerKarte);
 
             var layers = { // http://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml
                 geolandbasemap: L.tileLayer("http://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", {
@@ -66,13 +67,20 @@ window.onload = function() {
                     attribution: 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
                 })
             };
+			
+				
+				
+				
             adlerKarte.addLayer(layers.geolandbasemap);
             //adlerKarte.setView([47, 11], 10);
+			var el = L.control.elevation({collapsed: true
+				}).addTo(adlerKarte); 
             var etappe02 = L.geoJson(etappe02json, {
                 style: {
                     color: "#ff0050",
                     weight: 15
-                }
+                },
+				onEachFeature: el.addData.bind(el)
             });
 
             var etappe03 = L.geoJson(etappe03json, {
@@ -126,7 +134,7 @@ window.onload = function() {
 
             window.zeigBilder = function(data) {
                 for (var i = 0; i < data.photos.length; i++) {
-                    console.log("Photo title: ", i, data.photos[i].photo_title);
+                    //console.log("Photo title: ", i, data.photos[i].photo_title);
                     L.marker([data.photos[i].latitude, data.photos[i].longitude], {
                             icon: L.icon({
                                 iconUrl: data.photos[i].photo_file_url
@@ -135,4 +143,5 @@ window.onload = function() {
                         .addTo(adlerKarte);
                 }
             }
+	
         };
