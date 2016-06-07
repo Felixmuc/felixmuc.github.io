@@ -1,0 +1,10 @@
+GPS Track: http://www.gpsies.com/map.do?fileId=byvdkuotvsnouafi
+Umwandlung in GeoJson: http://mapbox.github.io/togeojson/
+Bilder: https://www.landeckzams.com/livecam/landeck01.jpg
+	https://de.wikipedia.org/wiki/Grins#/media/File:Lechtaler_Alpen.jpg
+	https://de.wikipedia.org/wiki/Augsburger_H%C3%BCtte#/media/File:ParseierspitzeVonAugsburgerh%C3%BCtte.jpg
+	https://de.wikipedia.org/wiki/Parseierspitze#/media/File:ParseierspitzeFromE.jpg
+	http://www.alpenverein-waging.de/berichte/augsburger-hoehenweg/
+	http://www.gasthof-traube.at/de/
+
+	
