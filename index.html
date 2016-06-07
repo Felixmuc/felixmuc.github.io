@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Augsburger Höhenweg</title>
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+<script src="augsburg.js"></script>
+
+<link rel="stylesheet" href="map.css"/>
+
+
+
+<script>
+    window.onload = function () {
+        var layers = { // http://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml
+            geolandbasemap : L.tileLayer("http://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", {
+                subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                attribution : 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
+            }),
+            bmapoverlay : L.tileLayer("http://{s}.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", {
+                subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                attribution : 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
+            }),
+            bmapgrau : L.tileLayer("http://{s}.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png", {
+                subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                attribution : 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
+            }),
+            bmaphidpi : L.tileLayer("http://{s}.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jpeg", {
+                subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                attribution : 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
+            }),
+            bmaporthofoto30cm : L.tileLayer("http://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
+                subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                attribution : 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
+            })
+        };
+		
+        var karte = L.map('map', {
+            layers : [layers.geolandbasemap],
+            center : [47.148317, 10.5069183],
+            zoom : 13
+        });	
+		
+			var marker = L.marker([47.1466116, 10.5722353]).addTo(karte).bindPopup('Bahnhof'); marker.bindPopup('<h2>Bahnhof Landeck (Webcam)</h2><img style="width:300px;" src="https://www.landeckzams.com/livecam/landeck01.jpg" />')
+			var marker = L.marker([47.142036, 10.5129903]).addTo(karte).bindPopup('Grins'); marker.bindPopup('<h2>Grins</h2><img style="width:300px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Lechtaler_Alpen.jpg/1280px-Lechtaler_Alpen.jpg" />')
+			var marker = L.marker([47.168838,10.489245]).addTo(karte).bindPopup('Augsburger Hütte'); marker.bindPopup('<h2>Augsburger Hütte mit Parseierspitze</h2><img style="width:300px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/ParseierspitzeVonAugsburgerh%C3%BCtte.jpg/800px-ParseierspitzeVonAugsburgerh%C3%BCtte.jpg" />')
+			var marker = L.marker([47.1739245,10.4799714]).addTo(karte).bindPopup('Parseierspitze'); marker.bindPopup('<h2>Parseierspitze</h2><img style="width:300px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/ParseierspitzeFromE.jpg/1280px-ParseierspitzeFromE.jpg" />')
+			var marker = L.marker([47.1709549,10.4102153]).addTo(karte).bindPopup('Samspitze'); marker.bindPopup('<h2>Unterwegs</h2><img style="width:300px;" src="http://www.alpenverein-waging.de/img/berichte/augsburger-hoehenweg/10.jpg" />')
+			var marker = L.marker([47.1521836,10.3777443]).addTo(karte).bindPopup('Schnann'); marker.bindPopup('<h2>Schnann</h2><img style="width:300px;" src="http://www.gasthof-traube.at/wp-content/uploads/startseite-haus-zwerg1.jpg" />')
+			
+			var linie = L.polyline([
+						[47.1466116, 10.5722353],
+						[47.142036, 10.5129903],
+            
+						], {color: 'green',weight: 10}).addTo(karte);
+						//map.fitBounds(linie.getBounds()); 
+						
+			/*L.control.scale({
+            'imperial': true
+			}).addTo(karte); */
+			
+		var route = L.geoJson(window.augsburg, {
+        style: {
+            color: "red",
+            weight: 10
+        }
+    }).addTo(karte);
+	
+        L.control.layers({
+            "Geoland Basemap" : layers.geolandbasemap,
+            "Geoland Basemap Overlay" : layers.bmapoverlay,
+            "Geoland Basemap Grau": layers.bmapgrau,
+            "Geoland Basemap High DPI" : layers.bmaphidpi,
+            "Geoland Basemap Orthofoto" : layers.bmaporthofoto30cm
+        }).addTo(karte)
+        L.control.scale({
+            'imperial' : false
+        }).addTo(karte);
+    };
+	
+		
+	 
+             
+			
+</script>
+</head>
+<body>
+    <div id="map"></div>
+</body>
+</html>
