@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+h1 {
+    text-align: center;
+}
+h3 {
+    text-align: left;
+}
+
+</style>
+
+<title>Augsburger Höhenweg</title>
+
+
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+
+<script src="augsburg.js"></script>
+
+
+<link rel="stylesheet" href="map.css"/>
+
+<div id="mousepos"></div>
+
+
+   <link rel="stylesheet" href="elevation/leaflet.elevation-0.0.4.css" />
+   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+   <script src="elevation/leaflet.elevation-0.0.4.min.js"></script>
+
+
+
+
+
+<script>
+    window.onload = function () {
+        var layers = { // http://www.basemap.at/wmts/1.0.0/WMTSCapabilities.xml
+            geolandbasemap : L.tileLayer("http://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", {
+                subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                attribution : 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
+            }),
+            bmapoverlay : L.tileLayer("http://{s}.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", {
+                subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                attribution : 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
+            }),
+            bmapgrau : L.tileLayer("http://{s}.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png", {
+                subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                attribution : 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
+            }),
+            bmaphidpi : L.tileLayer("http://{s}.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jpeg", {
+                subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                attribution : 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
+            }),
+            bmaporthofoto30cm : L.tileLayer("http://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg", {
+                subdomains : ['maps', 'maps1', 'maps2', 'maps3', 'maps4'],
+                attribution : 'Datenquelle: <a href="http://www.basemap.at/">basemap.at</a>'
+            })
+        };
+		
+        var karte = L.map('map', {
+            layers : [layers.geolandbasemap],
+            center : [47.148317, 10.5069183],
+            zoom : 12
+        });	
+		
+		
+		
+	
+		
+		
+		
+			var marker = L.marker([47.1466116, 10.5722353]).addTo(karte).bindPopup('Bahnhof'); marker.bindPopup('<h2>Bahnhof Landeck (Webcam)</h2><img style="width:300px;" src="https://www.landeckzams.com/livecam/landeck01.jpg" />')
+			var marker = L.marker([47.144026, 10.5098903]).addTo(karte).bindPopup('Grins'); marker.bindPopup('<h2>Grins</h2><img style="width:300px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Lechtaler_Alpen.jpg/1280px-Lechtaler_Alpen.jpg" />')
+			var marker = L.marker([47.166354165,10.493584871]).addTo(karte).bindPopup('Augsburger Hütte'); marker.bindPopup('<h2>Augsburger Hütte mit Parseierspitze</h2><img style="width:300px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/ParseierspitzeVonAugsburgerh%C3%BCtte.jpg/800px-ParseierspitzeVonAugsburgerh%C3%BCtte.jpg" />')
+			var marker = L.marker([47.1742245,10.4782714]).addTo(karte).bindPopup('Parseierspitze'); marker.bindPopup('<h2>Parseierspitze</h2><img style="width:300px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/ParseierspitzeFromE.jpg/1280px-ParseierspitzeFromE.jpg" />')
+			var marker = L.marker([47.16987716,10.43254852]).addTo(karte).bindPopup('Samspitze'); marker.bindPopup('<h2>Unterwegs</h2><img style="width:300px;" src="http://www.alpenverein-waging.de/img/berichte/augsburger-hoehenweg/10.jpg" />')
+			var marker = L.marker([47.1522836,10.3799443]).addTo(karte).bindPopup('Schnann'); marker.bindPopup('<h2>Schnann</h2><img style="width:300px;" src="http://www.gasthof-traube.at/wp-content/uploads/startseite-haus-zwerg1.jpg" />')
+			
+			var linie = L.polyline([
+						[47.1466116, 10.5722353],
+						[47.142036, 10.5129903],
+            
+						], {color: 'green',weight: 10}).addTo(karte);
+						
+			
+		var route = L.geoJson(window.augsburg, {
+        style: {
+            color: "red",
+            weight: 10
+        }
+    }).addTo(karte);
+	
+		
+		L.control.scale({
+            'imperial' : false
+        }).addTo(karte);
+		
+		
+    var elevationProfile = L.control.elevation({
+        collapsed: true
+    });
+
+		L.geoJson(window.augsburg,{
+        onEachFeature: elevationProfile.addData.bind(elevationProfile)
+    }).addTo(karte);
+
+		elevationProfile.addTo(karte);
+		
+		
+		
+	
+        L.control.layers({
+            "Geoland Basemap" : layers.geolandbasemap,
+            "Geoland Basemap Overlay" : layers.bmapoverlay,
+            "Geoland Basemap Grau": layers.bmapgrau,
+            "Geoland Basemap High DPI" : layers.bmaphidpi,
+            "Geoland Basemap Orthofoto" : layers.bmaporthofoto30cm
+        }).addTo(karte)
+		
+		var mouseposDIV = document.getElementById("mousepos");
+		karte.on("mousemove", function(event) {
+		console.log("Event: ", event);
+		mouseposDIV.innerHTML = "Lat: " + event.latlng.lat +" Lng: "+ event.latlng.lng;
+		}).addTo(karte);
+	};
+	
+	
+
+</script>
+</head>
+<body background="IMG_3085.JPG">
+
+	<h1 style="color:yellow"; "font face:Verdana">Augsburger Höhenweg</h1>
+	<p style="color:yellow">Der Augsburger Höhenweg ist ein sehr anspruchsvoller und langer Höhenweg in den Lechtaler Alpen.</p>
+	<p style="color:yellow">Der Weg ist die Verbindung zwischen der Ansbacher Hütte und der Augsburger Hütte. Der hochalpine Steig verläuft in den Lechtaler Alpen in Höhen von knapp unter 3000m und gilt als sehr anspruchsvoll.</p>
+	<p style="color:yellow">Die Gehzeit beträgt ohne Zu- und Abstieg bei guten Verhältnissen etwa 8 bis 10 Stunden. Der Augsburger Höhenweg kann von beiden Richtungen aus begangen werden und ist in etwa gleich anspruchsvoll.</p>
+	
+	<div id="map" style="width:900px;height:600px; border:2px solid red;";></div>
+	
+	<h3>Wichtige Links</h3>
+	<ul>
+		<li><a href="https://www.postbus.at/de/Fahrplanauskunft/Fahrplandownload/index.jsp?search=true&land=TIROL&fahrplanabfrage=&startat=60">Fahrplan</a></li>
+        <li><a href="https://www.dav-augsburg.de/augsburger-huette">Augsburger Hütte</a></li>
+        <li><a href="http://www.wetter.at/wetter/oesterreich/tirol/landeck">Wetter Landeck</a></li>
+        <li><a href="http://www.br.de/mediathek/video/sendungen/bergauf-bergab/augsburger-hoehenweg-112.html">Video</a></li>
+	</ul>
+
+
+    
+	
+	
+	
+	
+	
+</body>
+</html>
